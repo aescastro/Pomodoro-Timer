@@ -97,6 +97,8 @@ function main() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
 
+    console.log(queryString);
+    console.log(urlParams);
     if (urlParams.has("bg")) {
         document.body.backgroundColor = urlParams.get("bg");
     }
