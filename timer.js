@@ -93,6 +93,12 @@ class Timer {
 }
 
 function main() {
+    
+    var hash = window.location.hash.split("/");
+    if (hash.length > 1) {
+        document.body.backgroundColor = hash[1];
+    }
+    
     new Timer();
 }
 
