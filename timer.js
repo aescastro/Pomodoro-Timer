@@ -94,9 +94,11 @@ class Timer {
 
 function main() {
     
-    var hash = window.location.hash.split("/");
-    if (hash.length > 1) {
-        document.body.backgroundColor = hash[1];
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+
+    if (urlParams.has("bg")) {
+        document.body.backgroundColor = urlParams.get("bg");
     }
     
     new Timer();
