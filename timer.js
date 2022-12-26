@@ -88,7 +88,7 @@ class Timer {
 
     incSessions() {
         this.sessions++;
-        this.sessionElement.innerHTML = "#" + this.sessions;
+        this.sessionElement.innerHTML = this.sessions;
     }
 }
 
