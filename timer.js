@@ -103,6 +103,10 @@ function main() {
         document.body.style.backgroundColor = urlParams.get("bg");
     }
     
+    if (urlParams.has("font")) {
+        document.querySelector('*').style.fontFamily = urlParams.get("font");
+    }
+    
     new Timer();
 }
 
