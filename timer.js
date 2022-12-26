@@ -104,7 +104,8 @@ function main() {
     }
     
     if (urlParams.has("font")) {
-        document.querySelector('*').style.fontFamily = urlParams.get("font");
+        document.head.innerHTML = document.head.innerHTML + "<style type='text/css'>*{font-family: " + urlParams.get("font") + "!important }</style>";
+
     }
     
     new Timer();
