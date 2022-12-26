@@ -1,7 +1,8 @@
 
 class Timer {
     constructor() {
-        this.timeElement = document.getElementById("timer-text");
+        this.minElement = document.getElementById("mins");
+        this.secElement = document.getElementById("secs");
         this.ico = document.getElementById("ico");
         this.sessionElement = document.getElementById("session-display");
         this.startButton = document.getElementById("start");
@@ -49,7 +50,8 @@ class Timer {
     setTimer(minutes, seconds) {
         this.minutes = minutes;
         this.seconds = seconds;
-        this.timeElement.innerHTML = (minutes < 10 ? "0" + minutes.toString() : minutes) + ":" + (seconds < 10 ? "0" + seconds.toString() : seconds);
+        this.minElement.innerHTML = minutes < 10 ? "0" + minutes.toString() : minutes;
+        this.secElement.innerHTML = seconds < 10 ? "0" + seconds.toString() : seconds;
     }
 
     changeBreak() {
