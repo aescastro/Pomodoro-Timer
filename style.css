@@ -17,6 +17,7 @@ body {
     grid-template-columns: auto auto;
     grid-template-rows: auto auto auto;
     row-gap: 1vw;
+    margin-top: 5vw;
 }
 
 #content h1 {
