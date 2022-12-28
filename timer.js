@@ -30,7 +30,7 @@ class Timer {
                     } else {
                         this.setTimer(this.minutes, this.seconds - 1);
                     }
-                    
+                    this.setTitle();
                 }, 1000);
             } else {
                 this.setTitle();
@@ -43,8 +43,17 @@ class Timer {
         this.cancelButton.addEventListener("click", () => {
             this.startButton.innerHTML = "Start";
             clearInterval(this.ret);
-            this.setTimer(25, 0);
             this.running = false;
+            
+            if (this.onBreak && this.sessions % 4 == 0) {
+                this.setTimer(15, 0);
+            } else if (this.onBreak) {
+                this.setTimer(5, 0);
+            } else {
+                this.setTimer(25, 0);
+            }
+            
+            this.setTitle();
         });
     }
 
@@ -59,7 +68,6 @@ class Timer {
         this.seconds = seconds;
         this.minElement.innerHTML = minutes < 10 ? "0" + minutes.toString() : minutes;
         this.secElement.innerHTML = seconds < 10 ? "0" + seconds.toString() : seconds;
-        this.setTitle();
     }
 
     changeBreak() {
