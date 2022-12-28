@@ -33,6 +33,7 @@ class Timer {
                     
                 }, 1000);
             } else {
+                this.setTitle();
                 this.startButton.innerHTML = "Start";
                 clearInterval(this.ret);
                 this.running = false;
@@ -47,11 +48,18 @@ class Timer {
         });
     }
 
+    setTitle() {
+        var newTitle = !this.running ? "Paused" : this.onBreak ? "Break" : "Focus"
+        newTitle += " - " + (this.minutes < 10 ? "0" + this.minutes.toString() : this.minutes) + ":" + (this.seconds < 10 ? "0" + this.seconds.toString() : this.seconds);
+        document.title = newTitle;
+    }
+
     setTimer(minutes, seconds) {
         this.minutes = minutes;
         this.seconds = seconds;
         this.minElement.innerHTML = minutes < 10 ? "0" + minutes.toString() : minutes;
         this.secElement.innerHTML = seconds < 10 ? "0" + seconds.toString() : seconds;
+        this.setTitle();
     }
 
     changeBreak() {
