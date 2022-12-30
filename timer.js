@@ -8,8 +8,10 @@ class Timer {
         this.startButton = document.getElementById("start");
         this.cancelButton = document.getElementById("cancel");
         this.notif = document.createElement("AUDIO");
+        this.click = document.createElement("AUDIO");
 
-        this.notif.src = "./smile-ringtone.mp3"
+        this.notif.src = "./Notification_Sound.wav"
+        this.click.src = "./Click_Sound.wav";
         this.minutes = 25;
         this.seconds = 0;
         this.sessions = 0;
@@ -18,6 +20,7 @@ class Timer {
         this.onBreak = false;
 
         this.startButton.addEventListener("click", () => {
+            this.click.play();
             this.running = !this.running;
         
             if (this.running) {
@@ -41,6 +44,7 @@ class Timer {
         });
 
         this.cancelButton.addEventListener("click", () => {
+            this.click.play();
             this.startButton.innerHTML = "Start";
             clearInterval(this.ret);
             this.running = false;
