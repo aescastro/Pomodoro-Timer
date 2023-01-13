@@ -7,22 +7,32 @@ class Timer {
         this.sessionElement = document.getElementById("session-display");
         this.startButton = document.getElementById("start");
         this.cancelButton = document.getElementById("cancel");
+
         this.notif = document.createElement("AUDIO");
         this.click = document.createElement("AUDIO");
-
         this.notif.src = "./sounds/Notification_Sound.wav"
         this.click.src = "./sounds/Click_Sound.wav";
-        this.minutes = 25;
-        this.seconds = 0;
-        this.sessions = 0;
+
+        this.minutes = window.sessionStorage.getItem("minutes") ?? 25;
+        this.seconds = window.sessionStorage.getItem("seconds") ?? 0;
+        this.sessions = window.sessionStorage.getItem("sessions") ?? 0;
+        this.onBreak = window.sessionStorage.getItem("onBreak") ?? false;
         this.running = false;
         this.ret = null;
-        this.onBreak = false;
+
+        this.setTimer(this.minutes, this.seconds);
+        this.setTitle();
+        this.sessionElement.innerHTML = this.sessions;
+
+        if (this.onBreak) {
+            this.ico.src = "./icons/cup-hot-fill.svg";
+        } else {
+            this.ico.src = "./icons/pen-fill.svg";
+        }
 
         this.startButton.addEventListener("click", () => {
             this.click.play();
             this.running = !this.running;
-        
             if (this.running) {
                 this.startButton.innerHTML = "Pause";
                 this.ret = setInterval(() => {
@@ -70,12 +80,21 @@ class Timer {
     setTimer(minutes, seconds) {
         this.minutes = minutes;
         this.seconds = seconds;
+
+        window.sessionStorage.setItem("minutes", minutes);
+        window.sessionStorage.setItem("seconds", seconds);
+
         this.minElement.innerHTML = minutes < 10 ? "0" + minutes.toString() : minutes;
         this.secElement.innerHTML = seconds < 10 ? "0" + seconds.toString() : seconds;
     }
 
+    setBreak(onBreak) {
+        this.onBreak = onBreak;
+        window.sessionStorage.setItem("onBreak", this.onBreak);
+    }
+
     changeBreak() {
-        this.onBreak = !this.onBreak;
+        this.setBreak(!this.onBreak);
         this.notif.play();
 
         if (this.onBreak) {
@@ -97,6 +116,7 @@ class Timer {
     incSessions() {
         this.sessions++;
         this.sessionElement.innerHTML = this.sessions;
+        window.sessionStorage.setItem("sessions", this.sessions);
     }
 }
 
