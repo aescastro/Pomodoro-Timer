@@ -15,12 +15,12 @@ class Timer {
         var created = new Date();
         var stored = new Date(parseInt(window.localStorage.getItem("created")));
         if (stored && stored.getDate() == created.getDate() && stored.getMonth() == created.getMonth() && stored.getFullYear() == created.getFullYear()) {
-            this.setTimer(window.localStorage.getItem("minutes"), window.localStorage.getItem("seconds"));
-            this.setSessions(window.localStorage.getItem("sessions"));
-            this.setBreak(window.localStorage.getItem("onBreak"));
+            this.setTimer(parseInt(window.localStorage.getItem("minutes")), parseInt(window.localStorage.getItem("seconds")));
+            this.setSessions(parseInt(window.localStorage.getItem("sessions")));
+            this.setBreak((window.localStorage.getItem("onBreak")) === "true");
         } else {
             window.localStorage.setItem("created", created.valueOf());
-            this.setTimer(25, 0);
+            this.setTimer(0, 5);
             this.setSessions(0);
             this.setBreak(false);
         }
