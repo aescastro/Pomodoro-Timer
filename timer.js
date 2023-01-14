@@ -1,4 +1,3 @@
-
 class Timer {
     constructor() {
         this.minElement = document.getElementById("mins");
@@ -13,10 +12,21 @@ class Timer {
         this.notif.src = "./sounds/Notification_Sound.wav"
         this.click.src = "./sounds/Click_Sound.wav";
 
-        this.minutes = window.sessionStorage.getItem("minutes") ?? 25;
-        this.seconds = window.sessionStorage.getItem("seconds") ?? 0;
-        this.sessions = window.sessionStorage.getItem("sessions") ?? 0;
-        this.onBreak = window.sessionStorage.getItem("onBreak") ?? false;
+        var created = new Date();
+        var stored = new Date(parseInt(window.localStorage.getItem("created")));
+        if (stored && stored.getDate() == created.getDate() && stored.getMonth() == created.getMonth() && stored.getFullYear() == created.getFullYear()) {
+            this.minutes = window.localStorage.getItem("minutes");
+            this.seconds = window.localStorage.getItem("seconds");
+            this.sessions = window.localStorage.getItem("sessions");
+            this.onBreak = window.localStorage.getItem("onBreak")
+        } else {
+            window.localStorage.setItem("created", created.valueOf());
+            this.minutes = 25;
+            this.seconds = 0;
+            this.sessions = 0;
+            this.onBreak = false;
+        }
+        
         this.running = false;
         this.ret = null;
 
@@ -81,8 +91,8 @@ class Timer {
         this.minutes = minutes;
         this.seconds = seconds;
 
-        window.sessionStorage.setItem("minutes", minutes);
-        window.sessionStorage.setItem("seconds", seconds);
+        window.localStorage.setItem("minutes", minutes);
+        window.localStorage.setItem("seconds", seconds);
 
         this.minElement.innerHTML = minutes < 10 ? "0" + minutes.toString() : minutes;
         this.secElement.innerHTML = seconds < 10 ? "0" + seconds.toString() : seconds;
@@ -90,7 +100,7 @@ class Timer {
 
     setBreak(onBreak) {
         this.onBreak = onBreak;
-        window.sessionStorage.setItem("onBreak", this.onBreak);
+        window.localStorage.setItem("onBreak", this.onBreak);
     }
 
     changeBreak() {
@@ -116,7 +126,7 @@ class Timer {
     incSessions() {
         this.sessions++;
         this.sessionElement.innerHTML = this.sessions;
-        window.sessionStorage.setItem("sessions", this.sessions);
+        window.localStorage.setItem("sessions", this.sessions);
     }
 }
 
