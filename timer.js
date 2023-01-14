@@ -20,7 +20,7 @@ class Timer {
             this.setBreak((window.localStorage.getItem("onBreak")) === "true");
         } else {
             window.localStorage.setItem("created", created.valueOf());
-            this.setTimer(0, 5);
+            this.setTimer(25, 0);
             this.setSessions(0);
             this.setBreak(false);
         }
