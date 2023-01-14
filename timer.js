@@ -15,25 +15,20 @@ class Timer {
         var created = new Date();
         var stored = new Date(parseInt(window.localStorage.getItem("created")));
         if (stored && stored.getDate() == created.getDate() && stored.getMonth() == created.getMonth() && stored.getFullYear() == created.getFullYear()) {
-            this.minutes = window.localStorage.getItem("minutes");
-            this.seconds = window.localStorage.getItem("seconds");
-            this.sessions = window.localStorage.getItem("sessions");
-            this.onBreak = window.localStorage.getItem("onBreak")
+            this.setTimer(window.localStorage.getItem("minutes"), window.localStorage.getItem("seconds"));
+            this.setSessions(window.localStorage.getItem("sessions"));
+            this.setBreak(window.localStorage.getItem("onBreak"));
         } else {
             window.localStorage.setItem("created", created.valueOf());
-            this.minutes = 25;
-            this.seconds = 0;
-            this.sessions = 0;
-            this.onBreak = false;
+            this.setTimer(0, 5);
+            this.setSessions(0);
+            this.setBreak(false);
         }
         
         this.running = false;
         this.ret = null;
 
-        this.setTimer(this.minutes, this.seconds);
         this.setTitle();
-        this.sessionElement.innerHTML = this.sessions;
-
         if (this.onBreak) {
             this.ico.src = "./icons/cup-hot-fill.svg";
         } else {
@@ -102,6 +97,12 @@ class Timer {
         this.onBreak = onBreak;
         window.localStorage.setItem("onBreak", this.onBreak);
     }
+    
+    setSessions(sessions) {
+        this.sessions = sessions;
+        this.sessionElement.innerHTML = sessions;
+        window.localStorage.setItem("sessions", this.sessions);
+    }
 
     changeBreak() {
         this.setBreak(!this.onBreak);
@@ -110,7 +111,7 @@ class Timer {
         if (this.onBreak) {
             this.ico.src = "./icons/cup-hot-fill.svg";
 
-            this.incSessions();
+            this.setSessions(this.sessions + 1);
             if (this.sessions % 4 == 0) {
                 this.setTimer(15, 0);
             } else {
@@ -121,12 +122,6 @@ class Timer {
             this.setTimer(25, 0);
         } 
         
-    }
-
-    incSessions() {
-        this.sessions++;
-        this.sessionElement.innerHTML = this.sessions;
-        window.localStorage.setItem("sessions", this.sessions);
     }
 }
 
