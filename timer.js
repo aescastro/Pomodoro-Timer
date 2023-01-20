@@ -1,3 +1,4 @@
+var doVisualUpdates = true; 
 class Timer {
     constructor() {
         this.minElement = document.getElementById("mins");
@@ -86,22 +87,19 @@ class Timer {
         this.minutes = minutes;
         this.seconds = seconds;
 
-        window.localStorage.setItem("minutes", minutes);
-        window.localStorage.setItem("seconds", seconds);
-
-        this.minElement.innerHTML = minutes < 10 ? "0" + minutes.toString() : minutes;
-        this.secElement.innerHTML = seconds < 10 ? "0" + seconds.toString() : seconds;
+        if (doVisualUpdates) {
+            this.minElement.innerHTML = minutes < 10 ? "0" + minutes.toString() : minutes;
+            this.secElement.innerHTML = seconds < 10 ? "0" + seconds.toString() : seconds;
+        }
     }
 
     setBreak(onBreak) {
         this.onBreak = onBreak;
-        window.localStorage.setItem("onBreak", this.onBreak);
     }
     
     setSessions(sessions) {
         this.sessions = sessions;
         this.sessionElement.innerHTML = sessions;
-        window.localStorage.setItem("sessions", this.sessions);
     }
 
     changeBreak() {
@@ -139,7 +137,15 @@ function main() {
 
     }
     
-    new Timer();
+    var timer = new Timer();
+
+    document.addEventListener('visibilitychange', function(){
+        doVisualUpdates = !document.hidden;
+        window.localStorage.setItem("minutes", timer.minutes);
+        window.localStorage.setItem("seconds", timer.seconds);
+        window.localStorage.setItem("sessions", timer.sessions);
+        window.localStorage.setItem("onBreak", timer.onBreak);
+    });
 }
 
 window.onload = function() {
