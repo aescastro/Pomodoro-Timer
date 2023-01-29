@@ -40,15 +40,20 @@ class Timer {
             this.click.play();
             this.running = !this.running;
             if (this.running) {
+                this.countDownDate = new Date().getTime() + (1000*60*this.minutes) + (1000*this.seconds);
                 this.startButton.innerHTML = "Pause";
                 this.ret = setInterval(() => {
-                    if (this.seconds == 0 && this.minutes == 0) {
+                    var now = new Date().getTime();
+                    var timeleft = this.countDownDate - now;
+                    var minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
+                    
+                    if (timeleft <= 0) {
                         this.changeBreak();                    
-                    } else if (this.seconds == 0) {
-                        this.setTimer(this.minutes - 1, 59);
                     } else {
-                        this.setTimer(this.minutes, this.seconds - 1);
+                        this.setTimer(minutes, seconds);
                     }
+
                     this.setTitle();
                 }, 1000);
             } else {
@@ -62,6 +67,7 @@ class Timer {
         this.cancelButton.addEventListener("click", () => {
             this.click.play();
             this.startButton.innerHTML = "Start";
+            this.countdownDate = null;
             clearInterval(this.ret);
             this.running = false;
             
@@ -111,13 +117,15 @@ class Timer {
 
             this.setSessions(this.sessions + 1);
             if (this.sessions % 4 == 0) {
+                this.countDownDate = new Date().getTime() + (1000*60*15);
                 this.setTimer(15, 0);
             } else {
+                this.countDownDate = new Date().getTime() + (1000*60*5);
                 this.setTimer(5,0); 
             }
         } else {
             this.ico.src = "./icons/pen-fill.svg";
-            this.setTimer(25, 0);
+            this.countDownDate = new Date().getTime() + (1000*60*25);
         } 
         
     }
