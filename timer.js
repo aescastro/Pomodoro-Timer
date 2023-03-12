@@ -164,12 +164,12 @@ function main() {
     
     var styleString = "";
     if (urlParams.has("font")) {
-        document.head.innerHTML = document.head.innerHTML + "<style type='text/css'>*{font-family: " + urlParams.get("font") + "!important }</style>";
         styleString += "font-family: " + urlParams.get("font") + "!important;"
     }
 
     if (urlParams.has("fontColour")) {
         styleString += "color: " + urlParams.get("fontColour") + "!important;"
+        
         var buttons = document.getElementsByClassName("access-buttons");
         for (let i = 0; i < buttons.length; i++) {
             buttons[i].style.borderColor = urlParams.get("fontColour");
