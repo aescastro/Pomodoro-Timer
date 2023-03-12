@@ -46,7 +46,12 @@ class Timer {
                     var now = new Date().getTime();
                     var timeleft = this.countDownDate - now;
                     var minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
-                    var seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
+                    var seconds = Math.round((timeleft % (1000 * 60)) / 1000);
+                    if (seconds == 60) {
+                        seconds = 0;
+                        minutes++;
+                    }
+                    // seconds = seconds == 60 ? 0 : seconds;
                     
                     if (timeleft <= 0) {
                         this.changeBreak();                    
